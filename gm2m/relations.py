@@ -766,11 +766,18 @@ class GM2MRel(ManyToManyRel):
                 tf_dict['tgt_fk'] = gfk.fk_field
             else:
                 for f in rel.through._meta.fields:
-                    if hasattr(f, 'rel') and f.remote_field \
-                    and (f.remote_field.model == rel.field.model
-                         or f.remote_field.model == '%s.%s' % (
-                            rel.field.model._meta.app_label,
-                            rel.field.model._meta.object_name)):
+                    # ETJ DEBUG
+                    if (hasattr(f, 'rel') and f.remote_field \
+                        and (f.remote_field.model == rel.field.model
+                             or f.remote_field.model == '%s.%s' % (rel.field.model._meta.app_label,rel.field.model._meta.object_name)
+                             or f.remote_field.model == rel.field.model._meta.object_name)):
+                    # NOTE: Original code failed on Django 1.10
+                    # if hasattr(f, 'rel') and f.remote_field \
+                    # and (f.remote_field.model == rel.field.model
+                    #      or f.remote_field.model == '%s.%s' % (
+                    #         rel.field.model._meta.app_label,
+                    #         rel.field.model._meta.object_name)):
+                    # END DEBUG 
                         tf_dict['src'] = f.name
                         break
                 for f in rel.through._meta.private_fields:
