@@ -29,4 +29,8 @@ def get_hg_chgset():
         return '?'
 
 
-__version__ = get_version()
+# __version__ = get_version()
+# ETJ DEBUG
+# HACK: we're not in Mercurial anymore, Toto
+__version__ = '0.5.0.dev'
+# END DEBUG 
